@@ -1,14 +1,14 @@
 <template>
     <div>
-        <span class="dustbin">🗑</span>
         <input type="text" v-model="title" @keydown.enter="addTodo" />
         <button v-if="active < all" @click="clear">清理</button>
         <div v-if="todos.length">
+        <span class="dustbin">🗑</span>
             <transition-group name="flip-list" tag="ul">
                 <li v-for="(todo, index) in todos" :key="todo.id">
                     <input type="checkbox" v-model="todo.done" />
-                    <span class="{done: todo.done}">{{todo.title}}</span>
-                    <span class="remove-btn" @click="removeTodo($event, index)">❌</span> 
+                    <span class="{done: todo.done}">{{ todo.title }}</span>
+                    <span class="remove-btn" @click="removeTodo($event, index)">❌</span>
                 </li>
             </transition-group>
         </div>
@@ -16,7 +16,7 @@
         <div>
             全选
             <input type="checkbox" v-model="allDone" />
-            <span> {{active}} / {{all}}</span>
+            <span> {{ active }} / {{ all }}</span>
         </div>
     </div>
 
@@ -36,7 +36,7 @@
 
 <script setup>
 
-import {ref, computed, reactive, nextTick} from 'vue'
+import { ref, computed, reactive, nextTick } from 'vue'
 import { useMouse } from '../utils/mouse'
 
 let title = ref("");
@@ -45,15 +45,15 @@ let todos = ref([
         id: 1,
         title: "学习",
         done: false
-    },{
+    }, {
         id: 2,
         title: "听歌",
         done: false
-    },{
+    }, {
         id: 3,
         title: "rap",
         done: false
-    },{
+    }, {
         id: 4,
         title: "篮球",
         done: false
@@ -63,7 +63,7 @@ let todos = ref([
 let showModal = ref(false)
 
 function addTodo() {
-    if(!title.value) {
+    if (!title.value) {
         showModal.value = true
         setTimeout(() => {
             showModal.value = false
@@ -87,14 +87,14 @@ function clear() {
 let all = computed(() => todos.value.length)
 //计算未选中条目数量 未完成的活动 v.done == false
 let active = computed(() => {
-        return todos.value.filter((v) => !v.done).length;
-    });
+    return todos.value.filter((v) => !v.done).length;
+});
 
 let allDone = computed({
-    get: function() {
+    get: function () {
         return active.value === 0
     },
-    set: function(value) {
+    set: function (value) {
         todos.value.forEach((todo) => {
             todo.done = value;
         });
@@ -136,15 +136,26 @@ function afterEnter(el) {
     el.style.display = 'none'
 }
 
-let {x, y} = useMouse()
+let { x, y } = useMouse()
 let count = ref(1)
 function add() {
     count.value++
 }
 
+
+const activeIndex = ref('1')
+const activeIndex2 = ref('1')
+const handleSelect = (key, keyPath) => {
+    console.log(key, keyPath)
+}
 </script>
 
-<style>
+<!-- 安装了 Sass 之后，就可以在css 里使用变量，嵌套，继承了 -->
+<style lang="scss" scoped>
+// 定义变量
+$padding: 10px;
+$white: #fff;
+
 /* 弹出框样式 动画 */
 .info-wapper {
     position: fixed;
@@ -159,62 +170,92 @@ function add() {
 }
 
 .modal-enter-from {
-  opacity: 0;
-  transform: translateY(-60px);
+    opacity: 0;
+    transform: translateY(-60px);
 }
+
 .modal-enter-active {
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
+
 .modal-leave-to {
-  opacity: 0;
-  transform: translateY(-60px);
+    opacity: 0;
+    transform: translateY(-60px);
 }
+
 .modal-leave-active {
-  transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 /* 垃圾桶样式 */
 .dustbin {
-  font-size: 40px;
-  position: fixed;
-  right: 10px;
-  top: 10px;
+    font-size: 40px;
+    position: fixed;
+    align-items: flex-end;
+    justify-content: end;
+    right: 10px;
+    top: 10px;
 }
+
 /* 删除按钮样式 */
 .remove-btn {
-  padding: 3px;
-  cursor: pointer;
+    padding: 3px;
+    cursor: pointer;
 }
 
 /* js删除 移动垃圾桶动画 */
 .animate-wrap .animate {
-  position: fixed;
-  right: 10px;
-  top: 11px;
-  z-index: 100;
-  transition: all 0.5s linear;
+    position: fixed;
+    right: 10px;
+    top: 11px;
+    z-index: 100;
+    transition: all 0.5s linear;
 }
+
 /* 删除 条目 条目动画 */
-li {
-    margin-right: 10px;
-    /* display: inline-block;  */
+// li {
+//     display: flex;
+//     margin-right: 10px;
+//     width: 50%;
+//     left: 25%;
+//     right: 25%;
+//     display: inline-block;
+// }
+
+ul {
+    width: 500px;
+    margin: 0 auto;
+    padding: 0;
+    li {
+        &:hover {
+            cursor: pointer;
+        }
+        list-style-type: none;
+        margin-bottom: $padding;
+        padding: $padding;
+        background: $white;
+        box-shadow: 1px 1px 2px rgba($color: #000000, $alpha: 1.0);
+    }
 }
 
 li:hover {
     background-color: hotpink;
     transition: all 0.8s ease;
 }
+
 /* .flip-list-move {
     transition: transform 0.8s ease;
 } */
 .flip-list-enter-active,
 .flip-list-leave-active {
-  transition: all .8s ease;
+    transition: all .8s ease;
 }
+
 .flip-list-enter-from,
 .flip-list-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
+    opacity: 0;
+    transform: translateX(30px);
 }
+
 
 </style>
