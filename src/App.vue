@@ -6,17 +6,17 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-    <el-menu-item index="1">Processing Center</el-menu-item>
+    <el-menu-item index="1">主页</el-menu-item>
     <el-sub-menu index="2">
-      <template #title v-slot:title>Workspace</template>
-      <el-menu-item index="2-1">item one</el-menu-item>
-      <el-menu-item index="2-2">item two</el-menu-item>
-      <el-menu-item index="2-3">item three</el-menu-item>
+      <template #title>第一个</template>
+      <el-menu-item index="2-1">菜单2-1</el-menu-item>
+      <el-menu-item index="2-2">菜单2-1</el-menu-item>
+      <el-menu-item index="2-3">菜单2-1</el-menu-item>
       <el-sub-menu index="2-4">
-        <template #title>item four</template>
-        <el-menu-item index="2-4-1">item one</el-menu-item>
-        <el-menu-item index="2-4-2">item two</el-menu-item>
-        <el-menu-item index="2-4-3">item three</el-menu-item>
+        <template #title>菜单2-4+</template>
+        <el-menu-item index="2-4-1">2-4-1</el-menu-item>
+        <el-menu-item index="2-4-2">2-4-2</el-menu-item>
+        <el-menu-item index="2-4-3">2-4-3</el-menu-item>
       </el-sub-menu>
     </el-sub-menu>
     <el-menu-item index="3" disabled>Info</el-menu-item>
@@ -27,7 +27,7 @@ import HelloWorld from './components/HelloWorld.vue'
   <el-container>
     <el-header>Header</el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="15%">
         <div>
           <router-link to="/">首页</router-link>
         </div>
@@ -36,6 +36,9 @@ import HelloWorld from './components/HelloWorld.vue'
         </div>
         <div>
           <router-link to="/my">我的</router-link>
+        </div>
+        <div>
+          <router-link to="/login">登陆</router-link>
         </div>
       </el-aside>
       <el-container>
@@ -55,7 +58,7 @@ import { ref } from 'vue'
 
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -64,24 +67,26 @@ import { ref } from 'vue'
   color: #2c3e50;
   margin-top: 60px;
 }
- .el-header,
- .el-footer {
-   background-color: #b3c0d1;
-   color: #333;
-   text-align: center;
- }
 
- .el-aside {
-   background-color: #d3dce6;
-   color: #333;
- }
+.el-header,
+.el-footer {
+  background-color: #b3c0d1;
+  color: #333;
+  text-align: center;
+}
 
- .el-main {
-   background-color: #e9eef3;
-   color: #333;
- }
+.el-aside {
+  background-color: #d3dce6;
+  color: #333;
+}
 
- body>.el-container {
-   margin-bottom: 40px;
- }
+.el-main {
+  background-color: #e9eef3;
+  color: #333;
+  padding: 0;
+}
+
+body>.el-container {
+  margin-bottom: 40px;
+}
 </style>
